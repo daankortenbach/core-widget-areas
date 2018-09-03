@@ -74,7 +74,7 @@ class WidgetArea extends Core {
 		}
 
 		if ( array_key_exists( self::UNREGISTER, $this->config ) ) {
-			$this->unregister( $this->config[ self::UNREGISTER ] );
+			add_action( 'widgets_init', [ $this, 'unregister' ], 11 );
 		}
 	}
 
@@ -101,12 +101,10 @@ class WidgetArea extends Core {
 	 *
 	 * @since 0.2.0
 	 *
-	 * @param array $config Unregister config.
-	 *
 	 * @return array
 	 */
-	protected function unregister( $config ) {
-		return array_map( 'unregister_sidebar', $config );
+	public function unregister() {
+		return array_map( 'unregister_sidebar', $this->config[ self::UNREGISTER ] );
 	}
 
 	/**
